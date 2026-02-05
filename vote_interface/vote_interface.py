@@ -2,18 +2,37 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from pathlib import Path
+<<<<<<< vote-interface
+=======
+
+LARGEFONT = ("Verdana", 35)
+>>>>>>> main
 
 
-interface = 0
-def change_interface(n):
-    global interface
-    interface = n
+class tkinterApp(tk.Tk):
+    # __init__ function for class tkinterApp
+    def __init__(self, *args, **kwargs):
 
+        # __init__ function for class Tk
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.geometry("650x1155")
+        self.title("Vote for your favorite dish")
+        # Background
+        
+        img = Image.open('background.jpg')
+        self.bg_img = ImageTk.PhotoImage(img)
 
-def reset_interface():
-    change_interface(0)  
+        bg_label = tk.Label(self, image=self.bg_img)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        
+        # creating a container
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
 
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
 
+<<<<<<< vote-interface
 def main():
     root = tk.Tk()
     root.title("Vote for your favorite food")
@@ -28,24 +47,144 @@ def main():
     bg_label = tk.Label(root, image=bg_img)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     bg_label.lower()
+=======
+        # initializing frames to an empty array
+        self.frames = {}
 
-    title_label = tk.Label(root, text = "Vote for your favorite food", font=("Arial", 24), fg="#94E466",bg="#130D0D")
-    title_label.place(relx=0.5, y=40, anchor="center")
-    title_label.lift()
+        # iterating through a tuple consisting
+        # of the different page layouts
+        for F in (StartPage, VotePage, ResultPage, WinnerPage):
+            frame = F(container, self)
 
-    if interface == 0:
-        vote_button = ttk.Button(root, text="Vote", command=change_interface(1))
-        result_button = ttk.Button(root, text="Results", command=change_interface(2))
-        winner_button = ttk.Button(root, text="Winner", command=change_interface(3))
-        reset_button = ttk.Button(root, text="Reset", command=reset_interface)
+            # initializing frame of that object from
+            # startpage, page1, page2 respectively with
+            # for loop
+            self.frames[F] = frame
+>>>>>>> main
 
-        vote_button.pack(ipadx=5, ipady=5, expand=True)
-        result_button.pack(ipadx=5, ipady=5, expand=True)
-        winner_button.pack(ipadx=5, ipady=5, expand=True)
-        reset_button.pack(ipadx=5, ipady=5, expand=True)
+            frame.grid(row=0, column=0, sticky="nsew")
 
-    root.mainloop()
+        self.show_frame(StartPage)
+
+    # to display the current frame passed as
+    # parameter
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
 
 
-if __name__ == "__main__":
-    main()
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        img = Image.open("background.jpg")
+        self.bg_img = ImageTk.PhotoImage(img)
+
+        bg_label = tk.Label(self, image=self.bg_img)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        # label of frame Layout 2
+        title_label = tk.Label(self, text="Vote for your favorite food",
+                       font=("Arial", 24, ),
+                       fg="white", bg="#111827")
+
+        # putting the grid in its place by using
+        title_label.place(relx=0.5, y=40, anchor="center")
+
+        button_vote = ttk.Button(
+            self, text="Vote", command=lambda: controller.show_frame(VotePage)
+        )
+        
+        # putting the button in its place by
+        button_vote.place(relx=0.5, y=200, anchor="center")
+
+        button_result = ttk.Button(
+            self, text="Result", command=lambda: controller.show_frame(ResultPage)
+        )
+        
+        
+        # putting the button in its place by
+        button_result.place(relx=0.5, y=450, anchor="center")
+
+        button_winner = ttk.Button(
+            self, text="Winner", command=lambda: controller.show_frame(WinnerPage)
+        )
+        
+        # putting the button in its place by
+        button_winner.place(relx=0.5, y=700, anchor="center")
+
+        button_reset = ttk.Button(
+            self, text="Reset"
+        )
+
+        # putting the button in its place by
+        button_reset.place(relx=0.5, y=950, anchor="center")
+
+
+
+
+# second window frame page1
+class VotePage(tk.Frame):
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+        img = Image.open("background.jpg")
+        self.bg_img = ImageTk.PhotoImage(img)
+
+        bg_label = tk.Label(self, image=self.bg_img)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # button to show frame 2 with text
+        # layout2
+        button1 = ttk.Button(
+            self, text="StartPage", command=lambda: controller.show_frame(StartPage)
+        )
+
+        # putting the button in its place
+        # by using grid
+        button1.grid(row=1, column=1, padx=10, pady=10)
+
+
+class ResultPage(tk.Frame):
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+        img = Image.open("background.jpg")
+        self.bg_img = ImageTk.PhotoImage(img)
+
+        bg_label = tk.Label(self, image=self.bg_img)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # button to show frame 2 with text
+        # layout2
+        button1 = ttk.Button(
+            self, text="StartPage", command=lambda: controller.show_frame(StartPage)
+        )
+
+        # putting the button in its place
+        # by using grid
+        button1.grid(row=1, column=1, padx=10, pady=10)
+
+
+class WinnerPage(tk.Frame):
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+        img = Image.open("background.jpg")
+        self.bg_img = ImageTk.PhotoImage(img)
+
+        bg_label = tk.Label(self, image=self.bg_img)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        # button to show frame 2 with text
+        # layout2
+        button1 = ttk.Button(
+            self, text="StartPage", command=lambda: controller.show_frame(StartPage)
+        )
+
+        # putting the button in its place
+        # by using grid
+        button1.grid(row=1, column=1, padx=10, pady=10)
+
+
+# Driver Code
+app = tkinterApp()
+app.mainloop()

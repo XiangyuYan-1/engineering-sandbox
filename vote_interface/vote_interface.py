@@ -1,18 +1,22 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from datetime import datetime
+from PIL import Image, ImageTk
 
 
 def main():
     root = tk.Tk()
     root.title("Vote for your favorite food")
-    root.geometry("900x520")
-    root.minsize(820, 480)
-    root.configure(bg="#03163D")
+    root.geometry("650x1155")
+    
+    
+    img = Image.open(r"C:\Users\15691\epf-programming\python projet\engineering-sandbox\vote_interface\background.jpg")
+    bg_img = ImageTk.PhotoImage(img)
 
-    #header
-    header = tk.Frame(root, bg="#111827", padx=18, pady=14)
-    header.pack(fill="x")
+    root.bg_img = bg_img  
+    bg_label = tk.Label(root, image=bg_img)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+
 
     root.mainloop()
 

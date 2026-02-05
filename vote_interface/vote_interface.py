@@ -1,13 +1,13 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
-from datetime import datetime
+from tkinter import ttk
+
 
 interface = 0
 
 
-def vote_button_click():
+def change_interface(n):
     global interface
-    interface = 1
+    interface = n
 
 
 def main():
@@ -22,8 +22,13 @@ def main():
     header.pack(fill="x")
 
     if interface == 0:
-        vote_button = ttk.Button(root, text="Vote", command=vote_button_click)
+        vote_button = ttk.Button(root, text="Vote", command=change_interface(1))
+        result_button = ttk.Button(root, text="Results", command=change_interface(2))
+        winner_button = ttk.Button(root, text="Winner", command=change_interface(3))
+
         vote_button.pack(ipadx=5, ipady=5, expand=True)
+        result_button.pack(ipadx=5, ipady=5, expand=True)
+        winner_button.pack(ipadx=5, ipady=5, expand=True)
 
     root.mainloop()
 

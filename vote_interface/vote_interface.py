@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-
+from pathlib import Path
 
 
 interface = 0
@@ -17,13 +17,14 @@ def reset_interface():
 def main():
     root = tk.Tk()
     root.title("Vote for your favorite food")
-    root.geometry("600x1155")
+    root.geometry("650x1155")
 
-    
-    img = Image.open(r"C:\Users\15691\epf-programming\python projet\engineering-sandbox\vote_interface\background.jpg")
+    BASE_DIR = Path(__file__).resolve().parent
+    IMG_PATH = BASE_DIR /"background.jpg"
+
+    img = Image.open(IMG_PATH)
     bg_img = ImageTk.PhotoImage(img)
-
-    root.bg_img = bg_img  
+ 
     bg_label = tk.Label(root, image=bg_img)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     bg_label.lower()
